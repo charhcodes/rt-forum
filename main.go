@@ -29,7 +29,7 @@ func serveHTML(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
-	content := "<h1>Welcome!</h1>"
+	content := "<h1>Welcome to A Better Forum!</h1>"
 	w.Header().Set("Content-Type", "text/html")
 	w.Write([]byte(content))
 }
