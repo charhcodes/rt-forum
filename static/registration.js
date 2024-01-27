@@ -1,16 +1,18 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const registrationContainer = document.getElementById('registration-container');
-    registrationContainer.innerHTML = `
+document.addEventListener("DOMContentLoaded", function () {
+  const registrationContainer = document.getElementById("content");
+  registrationContainer.innerHTML = `
         <h2>Register</h2>
-        <form id="login-form">
+        <form id="register-form">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required><br>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br>
 
-            <button type="button" id="login-button">Login</button>
+            <button type="button" id="register-button">Register</button>
         </form>
-    `
-    ;
+    `;
 });

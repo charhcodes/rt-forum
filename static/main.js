@@ -1,25 +1,49 @@
-document.addEventListener("DOMContentLoaded", function () {
-    loadContent('/home');
+import LoginPage from "static/login.js";
+import HomePage from "static/home.js";
 
-    document.getElementById('content').addEventListener('click', function (event) {
-        if (event.target.tagName === 'A') {
-            event.preventDefault();
-            loadContent(event.target.getAttribute('href'));
-        }
-    });
-});
+const navigateTo = (page) => {
+  history.pushState(null, "", page); // update browser url
+  pageLoader();
+};
 
-function loadContent(url) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                document.getElementById('content').innerHTML = xhr.responseText;
-            } else {
-                console.error('Error loading content:', xhr.status);
-            }
-        }
+const pageLoader = async () => {
+  const pages = [
+    { path: "/", view: HomePage },
+    { path: "/login", view: LoginPage },
+  ];
+
+  const potentialMatches = pages.map((page) => {
+    return {
+      page: page,
+      isMatch: location.pathname === page.path,
     };
-    xhr.open('GET', url, true);
-    xhr.send();
-}
+  });
+
+  let match = potentialMatches.find((potentialMatch) => potentialMatch.isMatch);
+
+  if (!match) {
+    match = {
+      page: pages[0],
+      isMatch: true,
+    };
+  }
+
+  if (match.page.view === HomePage) {
+    document.querySelector("#content").innerHTML = await userView.renderHTML();
+  }
+  if (match.page.view === LoginPage) {
+    document.querySelector("#content").innerHTML = await userView.renderHTML();
+  }
+};
+
+window.addEventListener("popstate", pageLoader);
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.body.addEventListener("click", (event) => {
+    if (event.target.matches("[data-link]")) {
+      event.preventDefault();
+      navigateTo(event.target.href);
+    }
+  });
+  router();
+});
