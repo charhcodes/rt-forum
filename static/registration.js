@@ -1,6 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const registrationContainer = document.getElementById("content");
-  registrationContainer.innerHTML = `
+export default class RegisterPage {
+  constructor() {
+    // super();
+    //this.setTitle("Home");
+  }
+
+  renderHTML() {
+    return `
         <h2>Register</h2>
         <form id="register-form">
             <label for="username">Username:</label>
@@ -15,4 +20,5 @@ document.addEventListener("DOMContentLoaded", function () {
             <button type="button" id="register-button">Register</button>
         </form>
     `;
-});
+  }
+}

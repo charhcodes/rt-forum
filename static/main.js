@@ -1,8 +1,9 @@
-import LoginPage from "static/login.js";
-import HomePage from "static/home.js";
+import LoginPage from "./login.js";
+import HomePage from "./home.js";
+import RegisterPage from "./registration.js";
 
 const navigateTo = (page) => {
-  history.pushState(null, "", page); // update browser url
+  history.pushState(null, null, page); // update browser url
   pageLoader();
 };
 
@@ -10,40 +11,32 @@ const pageLoader = async () => {
   const pages = [
     { path: "/", view: HomePage },
     { path: "/login", view: LoginPage },
+    { path: "/register", view: RegisterPage },
   ];
 
-  const potentialMatches = pages.map((page) => {
-    return {
-      page: page,
-      isMatch: location.pathname === page.path,
-    };
-  });
+  let page = pages.find((page) => location.pathname === page.path);
+  if (page === undefined) page = pages[0];
 
-  let match = potentialMatches.find((potentialMatch) => potentialMatch.isMatch);
+  const view = new page.view();
+  const html = view.renderHTML();
 
-  if (!match) {
-    match = {
-      page: pages[0],
-      isMatch: true,
-    };
-  }
-
-  if (match.page.view === HomePage) {
-    document.querySelector("#content").innerHTML = await userView.renderHTML();
-  }
-  if (match.page.view === LoginPage) {
-    document.querySelector("#content").innerHTML = await userView.renderHTML();
-  }
+  document.querySelector("#container").innerHTML = html;
 };
 
 window.addEventListener("popstate", pageLoader);
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.body.addEventListener("click", (event) => {
-    if (event.target.matches("[data-link]")) {
-      event.preventDefault();
-      navigateTo(event.target.href);
-    }
+  document.querySelectorAll("a").forEach(function (element) {
+    element.addEventListener("click", function (e) {
+      e.preventDefault();
+      navigateTo(e.target.href);
+    });
   });
-  router();
+
+  // document.body.addEventListener("click", (event) => {
+  //   if (event.target.matches("[data-link]")) {
+  //     event.preventDefault();
+  //   }
+  // });
+  pageLoader();
 });

@@ -1,11 +1,11 @@
 export default class HomePage {
   constructor() {
     // super();
-    this.setTitle("Home");
+    //this.setTitle("Home");
   }
 
-  async renderHTML() {
-    `
+  renderHTML() {
+    return `
     <h1>Welcome to our forum</h1>
     `;
   }

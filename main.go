@@ -6,12 +6,21 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        http.ServeFile(w, r, "index.html")
-    })
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fs)
 
-	fmt.Println("Server listening on :8080...")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Server listening on :3000...")
+	err := http.ListenAndServe(":3000", nil)
+	if err != nil {
+		panic(err)
+	}
+
+	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    //     http.ServeFile(w, r, "index.html")
+    // })
+
+	// fmt.Println("Server listening on :8080...")
+	// http.ListenAndServe(":8080", nil)
 }
 
 // func serveHTML(w http.ResponseWriter, r *http.Request) {

@@ -1,11 +1,11 @@
 export default class LoginPage {
   constructor() {
     // super();
-    this.setTitle("Login");
+    //this.setTitle("Login");
   }
 
-  async renderHTML() {
-    `
+  renderHTML() {
+    return `
         <h2>Login</h2>
         <form id="login-form">
             <label for="username">Username:</label>
