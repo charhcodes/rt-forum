@@ -6,7 +6,7 @@ export default class HomePage {
 
   renderHTML() {
     return `
-    <h1>Welcome to our forum</h1>
+    <h2>Welcome to our forum</h2>
     `;
   }
 }
