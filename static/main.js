@@ -1,6 +1,7 @@
 import LoginPage from "./login.js";
 import HomePage from "./home.js";
 import RegisterPage from "./registration.js";
+import { loginHandler } from "./login.js";
 
 // function to update and redirect browser url
 const navigateTo = (page) => {
@@ -28,6 +29,24 @@ const pageLoader = async () => {
 
   // find and replace div container element with html of chosen page
   document.querySelector("#container").innerHTML = html;
+
+  // find current page, load relevant  event listeners for that page
+  switch (page.view) {
+    case LoginPage:
+      console.log("login page loaded");
+      document
+        .getElementById("login-button")
+        .addEventListener("click", loginHandler);
+      break;
+    case RegisterPage:
+      console.log("registration page loaded");
+      break;
+    case HomePage:
+      console.log("home page loaded");
+      break;
+    default:
+      console.log("default page loaded");
+  }
 };
 
 // replacing default forwards and backwards in browser with our pageLoader function
